@@ -1,8 +1,15 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_notimandu/push_notification.dart';
 
 void main() {
   runApp(const MyApp());
 }
+Future _firebaseMessagingBackgroundHandler(RemoteMessage message) async{
+  print("handdle message  ${message.messageId}" );
+}
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -55,6 +62,39 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
+late int _totalnotifications;
+  late final FirebaseMessaging _messaging;
+  PushNotification? _notificationInfo;
+  void requestAndRegisterNotification() async{
+    await Firebase.initializeApp();
+
+    _messaging = FirebaseMessaging.instance;
+    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
+    NotificationSettings settings = await _messaging.requestPermission(
+      alert: true,
+      badge: true,
+      provisional: false,
+      sound: true,
+
+    );
+
+    if(settings.authorizationStatus == AuthorizationStatus.authorized){
+      print("User graasdfd 어쩌구저쩌구");
+      String? token = await _messaging.getToken();
+      print("the token is " + token!);
+    }
+
+  }
+
+  @override
+  void initState(){
+    requestAndRegisterNotification();
+    _totalnotifications = 0;
+    super.initState();
+  }
+
   int _counter = 0;
 
   void _incrementCounter() {
