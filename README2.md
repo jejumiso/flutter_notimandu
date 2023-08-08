@@ -35,3 +35,6 @@ https://www.youtube.com/watch?v=u-7ut-phOrA
 
 
 6. Runner > AppDelegate.swift 파일 수정 (유튜브 내용 참조)
+
+
+7. APN인증서 등록 : 등록해도 안되네..
