@@ -34,4 +34,4 @@ https://www.youtube.com/watch?v=u-7ut-phOrA
  * APN인증서 등록은 안했음 : 하는게 어렵진 않지만 나중에 해볼 예정. 둘중하나만 등록 하면 되는것 같으니.. 혹 모르니 나중에 둘다 해보자..
 
 
-6. 
+6. Runner > AppDelegate.swift 파일 수정 (유튜브 내용 참조)

@@ -62,7 +62,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
+String strToken = "토큰값 수신되면 값이 표시되요";
 late int _totalnotifications;
   late final FirebaseMessaging _messaging;
   PushNotification? _notificationInfo;
@@ -83,6 +83,7 @@ late int _totalnotifications;
     if(settings.authorizationStatus == AuthorizationStatus.authorized){
       print("User graasdfd 어쩌구저쩌구");
       String? token = await _messaging.getToken();
+      strToken = token == null ? "토큰값 읽기 실패." :token;
       print("the token is " + token!);
     }
 
@@ -145,8 +146,8 @@ late int _totalnotifications;
           // wireframe for each widget.
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+             Text(
+              '${strToken}',
             ),
             Text(
               '$_counter',
