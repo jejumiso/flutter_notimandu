@@ -63,7 +63,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-String strToken = "토큰값 수신되면 값이 표시되요";
+String str1 = "str1";
+String str2 = "str2";
+String str3 = "str3";
 late int _totalnotifications;
   late final FirebaseMessaging _messaging;
   PushNotification? _notificationInfo;
@@ -84,7 +86,7 @@ late int _totalnotifications;
     if(settings.authorizationStatus == AuthorizationStatus.authorized){
       print("User graasdfd 어쩌구저쩌구");
       String? token = await _messaging.getToken();
-      strToken = token == null ? "토큰값 읽기 실패." :token;
+      str1 = token == null ? "토큰값 읽기 실패." :token;
       setState(() {
         
       });
@@ -95,7 +97,7 @@ late int _totalnotifications;
 
   @override
   void initState(){
-    requestAndRegisterNotification();
+    // requestAndRegisterNotification();
     _totalnotifications = 0;
     super.initState();
   }
@@ -151,20 +153,69 @@ late int _totalnotifications;
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
              Text(
-              '${strToken}',
+              '${str1}',
+            ),
+            Text(
+              '${str2}',
+            ),
+            Text(
+              '${str3}',
             ),
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
-
+            TextButton(
+                onPressed: () async {
+                    await Navigator.push(context, MaterialPageRoute(
+                        builder: (_) => KpostalView(
+                          useLocalServer: false, 
+                          // localPort: 8080, 
+                          kakaoKey: '5812e297b87b720d6e7f0aaed0808721',
+                            callback: (Kpostal result) {
+                                print(result.address);
+                                 str1 = 's1 ${result.address}';
+                                 str2 = 's1 ${result.latitude}';
+                                 str3 = 's1 ${result.longitude}';
+                                 setState(() {
+                                   
+                                 });
+                            }, 
+                        ),
+                    ));
+                },
+                child: Text('Search! 1'),
+            ),
+            TextButton(
+                onPressed: () async {
+                    await Navigator.push(context, MaterialPageRoute(
+                        builder: (_) => KpostalView(
+                            callback: (Kpostal result) {
+                                print(result.address);
+                                str1 = 's2 ${result.address}';
+                                str2 = 's2 ${result.latitude}';
+                                str3 = 's2 ${result.longitude}';
+                                setState(() {
+                                  
+                                });
+                            }, 
+                        ),
+                    ));
+                },
+                child: Text('Search! 2'),
+            ),
             TextButton(onPressed: () async{
-              Kpostal result = await Navigator.push(context, MaterialPageRoute(builder: (_) => KpostalView()));
-              print(result.address);
-              print(result.latitude);
-              print(result.longitude);
+              Kpostal result = await Navigator.push(
+                context, 
+                MaterialPageRoute(builder: (_) => KpostalView()));
+              str1 = 's3 ${result.address}';
+              str2 = 's3 ${result.latitude}';
+              str3 = 's3 ${result.longitude}';
+              setState(() {
+                
+              });
 
-            }, child: Text('주소찾기'))
+            }, child: Text('Search! 3'))
           ],
         ),
       ),
