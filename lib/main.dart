@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_notimandu/push_notification.dart';
+import 'package:kpostal/kpostal.dart';
 
 void main() {
   runApp(const MyApp());
@@ -84,6 +85,9 @@ late int _totalnotifications;
       print("User graasdfd 어쩌구저쩌구");
       String? token = await _messaging.getToken();
       strToken = token == null ? "토큰값 읽기 실패." :token;
+      setState(() {
+        
+      });
       print("the token is " + token!);
     }
 
@@ -153,6 +157,14 @@ late int _totalnotifications;
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
+
+            TextButton(onPressed: () async{
+              Kpostal result = await Navigator.push(context, MaterialPageRoute(builder: (_) => KpostalView()));
+              print(result.address);
+              print(result.latitude);
+              print(result.longitude);
+
+            }, child: Text('주소찾기'))
           ],
         ),
       ),
